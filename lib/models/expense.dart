@@ -1,49 +1,55 @@
 class Expense {
-    String _expenseName;
-    String _expenseDescription;
-    String _expenseType;
-    String _expenseDate;
-    double _expenseValue;
+  int _expenseId;
+  String _expenseName;
+  String _expenseDescription;
+  String _expenseType;
+  String _expenseDate;
+  double _expenseValue;
 
-    String get expenseName => this._expenseName;
+  int get expenseId => this._expenseId;
 
-    set expenseName(String expenseName) => this._expenseName = expenseName;
+  set expenseId(int expenseId) => this._expenseId = expenseId;
 
-    String get expenseDescription => this._expenseDescription;
+  String get expenseName => this._expenseName;
 
-    set expenseDescription(String expenseDescription) => this._expenseDescription = expenseDescription;
+  set expenseName(String expenseName) => this._expenseName = expenseName;
 
-    String get expenseType => this._expenseType;
+  String get expenseDescription => this._expenseDescription;
 
-    set expenseType(String expenseType) => this._expenseType = expenseType;
+  set expenseDescription(String expenseDescription) => this._expenseDescription = expenseDescription;
 
-    String get expenseDate => this._expenseDate;
+  String get expenseType => this._expenseType;
 
-    set expenseDate(String expenseDate) => this._expenseDate = expenseDate;
+  set expenseType(String expenseType) => this._expenseType = expenseType;
 
-    double get expenseValue => this._expenseValue;
+  String get expenseDate => this._expenseDate;
 
-    set expenseValue(double expenseValue) => this._expenseValue = expenseValue;
+  set expenseDate(String expenseDate) => this._expenseDate = expenseDate;
 
-    Expense();
+  double get expenseValue => this._expenseValue;
 
-    Expense.fromMap(Map map) {
-      this.expenseName = map["name"];
-      this.expenseDescription = map["description"];
-      this.expenseType = map["type"];
-      this.expenseDate = map["date"];
-      this.expenseValue = map["value"];
-    }
+  set expenseValue(double expenseValue) => this._expenseValue = expenseValue;
 
-    Map toJson() {
-      Map map = {
-        "name": expenseName,
-        "description": expenseDescription,
-        "value": expenseValue.toString(),
-        "date": expenseDate,
-        "type": expenseType
-      };
+  Expense();
 
-      return map;
-    }
+  Expense.fromMap(Map map) {
+    this.expenseId = map["id"];
+    this.expenseName = map["name"];
+    this.expenseDescription = map["description"];
+    this.expenseType = map["type"];
+    this.expenseDate = map["date"];
+    this.expenseValue = map["value"];
+  }
+
+  Map toJson() {
+    Map map = {
+      "name": expenseName,
+      "description": expenseDescription,
+      "value": expenseValue.toString(),
+      "date": expenseDate,
+      "type": expenseType
+    };
+
+    return map;
+  }
 }
