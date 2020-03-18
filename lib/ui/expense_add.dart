@@ -12,9 +12,10 @@ import 'package:flutter_masked_text/flutter_masked_text.dart';
 
 class ExpenseAdd extends StatefulWidget {
 
-  int expenseId;
+  final int expenseId;
+  final int initialIndex;
 
-  ExpenseAdd({this.expenseId});
+  ExpenseAdd({this.expenseId, this.initialIndex: 0});
 
   @override
   _ExpenseAddState createState() => _ExpenseAddState();
@@ -33,12 +34,27 @@ class _ExpenseAddState extends State<ExpenseAdd> {
 
   @override
   void initState() {
+    _recoverExpenseDetails();
+
     super.initState();
+  }
+
+  _recoverExpenseDetails() async {
+    http.Response response = await http.get(Uri.https("gestao-financeira-changeit.herokuapp.com", "/expense/${widget.expenseId}"));
+    if (response.statusCode == 200) {
+      Expense expense = Expense.fromMap(json.decode(utf8.decode(response.bodyBytes)));
+
+      _nameController.text = expense.expenseName;
+      _descriptionController.text = expense.expenseDescription;
+      _valueMaskController.updateValue(expense.expenseValue);
+      _dateMaskController.updateText(expense.expenseDate);
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
+      initialIndex: widget.initialIndex,
       length: 2,
       child: Scaffold(
         appBar: AppBar(
@@ -252,7 +268,7 @@ class _ExpenseAddState extends State<ExpenseAdd> {
     http.Response response;
 
     try {
-       response = await http.post(Uri.http("192.168.0.138:8080", "/expense"), body: body, headers: {"Content-Type":"application/json"});
+       response = await http.post(Uri.https("gestao-financeira-changeit.herokuapp.com", "/expense"), body: body, headers: {"Content-Type":"application/json"});
        if (response.statusCode == 200 || response.statusCode == 201) {
          return true;
        }
